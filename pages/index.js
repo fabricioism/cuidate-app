@@ -1,3 +1,4 @@
+import {useEffect} from "react"
 import Head from "next/head";
 import Image from "next/image";
 import { Box, Button, Flex, Text, Icon, Link, Stack } from "@chakra-ui/react";
@@ -5,6 +6,29 @@ import { LoginButtons } from "@/components/LoginButton";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+
+  useEffect(() => {
+
+    const myFunc = async () => {
+      const sendMessagePromise = await fetch(`${process.env.NEXT_PUBLIC_GO_URL}/v1/predictions`, {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      body: JSON.stringify({ sentence:"hola" }),
+    });
+
+    console.log(`process.env.NEXT_PUBLIC_GO_URL`, process.env.NEXT_PUBLIC_GO_URL);
+
+    const res = await sendMessagePromise.json();
+
+    console.log(`res`, res);
+    }
+
+    myFunc();
+
+  }, [])
+
+
+
   return (
     <>
       <Box bg="gray.200" py={16} px={4}>
